@@ -1,5 +1,7 @@
 //! The Codex Harness Nexus's meta vocabulary: its configuration, set one
-//! value at a time, and the subscription that follows it.
+//! value at a time, and the subscription that follows it. The text budget is
+//! the translator's own setting, which the translator answers itself; every
+//! other setting is the Nexus's.
 
 mod generated {
     pub mod signal;

@@ -7,6 +7,7 @@ impl Following for Configuration {
 
     fn after(mut state: Self, change: Self::Change) -> Self {
         match change {
+            Set::TextBudget(value) => state.text_budget_option = Some(value),
             Set::FlowsRoot(value) => state.flows_root_option = Some(value),
             Set::IdentityProducer(value) => state.identity_producer_option = Some(value),
             Set::SessionsDirectories(value) => state.sessions_directories_option = Some(value),

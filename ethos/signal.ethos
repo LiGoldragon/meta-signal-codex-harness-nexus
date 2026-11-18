@@ -5,28 +5,36 @@ Signal
 [ Configured.Set
   Subscribed.Stream<Configuration Set>
   ConfigureRefused.ConfigurationRefusal ]
-[ Capacity.Integer
+[ NodeLimit.Integer
+  DepthLimit.Integer
+  TextBudget.{ NodeLimit DepthLimit }
+  Capacity.Integer
   FlowsRoot.String
   IdentityProducer.String
   SessionsDirectories.Vector<FilePath>
   ThreadDatabases.Vector<FilePath>
-  Set.[ FlowsRoot
+  Set.[ TextBudget
+        FlowsRoot
         IdentityProducer
         SessionsDirectories
         ThreadDatabases
         SubscriberCapacity.Capacity ]
-  Configuration.{ Option<FlowsRoot>
+  Configuration.{ Option<TextBudget>
+                  Option<FlowsRoot>
                   Option<IdentityProducer>
                   Option<SessionsDirectories>
                   Option<ThreadDatabases>
                   Option<Capacity> }
-  ConfigurationField.[ FlowsRoot
+  ConfigurationField.[ TextBudget
+                       FlowsRoot
                        IdentityProducer
                        SessionsDirectories
                        ThreadDatabases
                        SubscriberCapacity ]
   Diagnostic.String
-  ConfigurationRefusal.[ InvalidCapacity.Capacity
+  ConfigurationRefusal.[ InvalidTextBudget.TextBudget
+                         TranslatorSetting
+                         InvalidCapacity.Capacity
                          InvalidPath.FilePath
                          Unrecorded.Diagnostic
                          CapacityUnset ] ]

@@ -7,6 +7,21 @@
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
+pub struct NodeLimit(pub i64);
+#[rustfmt::skip]
+#[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
+pub struct DepthLimit(pub i64);
+#[rustfmt::skip]
+#[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
+pub struct TextBudget {
+    pub node_limit: NodeLimit,
+    pub depth_limit: DepthLimit,
+}
+#[rustfmt::skip]
+#[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
 pub struct Capacity(pub i64);
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -28,6 +43,7 @@ pub struct ThreadDatabases(pub std::vec::Vec<harness::FilePath>);
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
 pub enum Set {
+    TextBudget(TextBudget),
     FlowsRoot(FlowsRoot),
     IdentityProducer(IdentityProducer),
     SessionsDirectories(SessionsDirectories),
@@ -38,6 +54,7 @@ pub enum Set {
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
 pub struct Configuration {
+    pub text_budget_option: std::option::Option<TextBudget>,
     pub flows_root_option: std::option::Option<FlowsRoot>,
     pub identity_producer_option: std::option::Option<IdentityProducer>,
     pub sessions_directories_option: std::option::Option<SessionsDirectories>,
@@ -48,6 +65,7 @@ pub struct Configuration {
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
 pub enum ConfigurationField {
+    TextBudget(TextBudget),
     FlowsRoot(FlowsRoot),
     IdentityProducer(IdentityProducer),
     SessionsDirectories(SessionsDirectories),
@@ -62,6 +80,8 @@ pub struct Diagnostic(pub String);
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
 pub enum ConfigurationRefusal {
+    InvalidTextBudget(TextBudget),
+    TranslatorSetting,
     InvalidCapacity(Capacity),
     InvalidPath(harness::FilePath),
     Unrecorded(Diagnostic),
