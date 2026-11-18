@@ -1,0 +1,7 @@
+Signal
+[]
+[ Configure.Set ]
+[ Configured.Set ]
+[ HookName.String
+  Set.[ Hooks.Vector<HookName>
+        RemoveHook.HookName ] ]
