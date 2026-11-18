@@ -25,5 +25,8 @@ Signal
                        SessionsDirectories
                        ThreadDatabases
                        SubscriberCapacity ]
+  Diagnostic.String
   ConfigurationRefusal.[ InvalidCapacity.Capacity
-                         InvalidPath.FilePath ] ]
+                         InvalidPath.FilePath
+                         Unrecorded.Diagnostic
+                         CapacityUnset ] ]
