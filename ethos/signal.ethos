@@ -3,7 +3,7 @@ Signal
 [ Configure.Set
   Subscribe ]
 [ Configured.Set
-  Subscribed.Stream<Configuration Set>
+  Subscribed.Stream<ConfigurationReadout ConfigurationChange>
   ConfigureRefused.ConfigurationRefusal ]
 [ NodeLimit.Integer
   DepthLimit.Integer
@@ -25,6 +25,10 @@ Signal
                   Option<SessionsDirectories>
                   Option<ThreadDatabases>
                   Option<Capacity> }
+  AwaitedDirectories.Vector<FilePath>
+  ConfigurationReadout.{ Configuration AwaitedDirectories }
+  ConfigurationChange.[ Set
+                        AwaitedDirectories ]
   ConfigurationField.[ TextBudget
                        FlowsRoot
                        IdentityProducer
@@ -32,9 +36,11 @@ Signal
                        ThreadDatabases
                        SubscriberCapacity ]
   Diagnostic.String
+  UnwatchableDirectory.{ FilePath Diagnostic }
   ConfigurationRefusal.[ InvalidTextBudget.TextBudget
                          TranslatorSetting
                          InvalidCapacity.Capacity
                          InvalidPath.FilePath
                          Unrecorded.Diagnostic
-                         CapacityUnset ] ]
+                         CapacityUnset
+                         UnwatchableDirectory ] ]

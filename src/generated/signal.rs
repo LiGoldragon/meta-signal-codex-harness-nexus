@@ -64,6 +64,24 @@ pub struct Configuration {
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
+pub struct AwaitedDirectories(pub std::vec::Vec<harness::FilePath>);
+#[rustfmt::skip]
+#[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
+pub struct ConfigurationReadout {
+    pub configuration: Configuration,
+    pub awaited_directories: AwaitedDirectories,
+}
+#[rustfmt::skip]
+#[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
+pub enum ConfigurationChange {
+    Set(Set),
+    AwaitedDirectories(AwaitedDirectories),
+}
+#[rustfmt::skip]
+#[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
 pub enum ConfigurationField {
     TextBudget(TextBudget),
     FlowsRoot(FlowsRoot),
@@ -79,6 +97,13 @@ pub struct Diagnostic(pub String);
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
+pub struct UnwatchableDirectory {
+    pub file_path: harness::FilePath,
+    pub diagnostic: Diagnostic,
+}
+#[rustfmt::skip]
+#[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
 pub enum ConfigurationRefusal {
     InvalidTextBudget(TextBudget),
     TranslatorSetting,
@@ -86,6 +111,7 @@ pub enum ConfigurationRefusal {
     InvalidPath(harness::FilePath),
     Unrecorded(Diagnostic),
     CapacityUnset,
+    UnwatchableDirectory(UnwatchableDirectory),
 }
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
@@ -99,14 +125,14 @@ pub enum Input {
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
 pub enum Output {
     Configured(Set),
-    Subscribed(signal::Frame<Configuration, Set>),
+    Subscribed(signal::Frame<ConfigurationReadout, ConfigurationChange>),
     ConfigureRefused(ConfigurationRefusal),
 }
 #[rustfmt::skip]
 #[allow(clippy::large_enum_variant)]
 pub enum Answer {
     Once(Output),
-    Subscribed(signal::Stream<Configuration, Set>),
+    Subscribed(signal::Stream<ConfigurationReadout, ConfigurationChange>),
 }
 #[rustfmt::skip]
 #[allow(clippy::result_large_err, clippy::ptr_arg, clippy::borrowed_box)]
@@ -114,7 +140,10 @@ pub trait Answering {
     fn configure(&self, set: &Set) -> std::result::Result<Set, Output>;
     fn subscribe(
         &self,
-    ) -> std::result::Result<signal::Stream<Configuration, Set>, Output>;
+    ) -> std::result::Result<
+        signal::Stream<ConfigurationReadout, ConfigurationChange>,
+        Output,
+    >;
 }
 #[rustfmt::skip]
 pub trait Answerable {

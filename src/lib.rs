@@ -1,7 +1,10 @@
 //! The Codex Harness Nexus's meta vocabulary: its configuration, set one
-//! value at a time, and the subscription that follows it. The text budget is
-//! the translator's own setting, which the translator answers itself; every
-//! other setting is the Nexus's.
+//! value at a time, and the subscription that follows its readout. The text
+//! budget is the translator's own setting, which the translator answers
+//! itself; every other setting is the Nexus's. The readout is the recorded
+//! configuration and the sessions directories recorded but not yet present,
+//! which the Nexus awaits; a directory present that cannot be watched is
+//! refused, never recorded.
 
 mod generated {
     pub mod signal;

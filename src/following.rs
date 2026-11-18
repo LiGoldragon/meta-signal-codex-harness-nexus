@@ -1,6 +1,6 @@
 use signal::Following;
 
-use crate::{Configuration, Set};
+use crate::{Configuration, ConfigurationChange, ConfigurationReadout, Set};
 
 impl Following for Configuration {
     type Change = Set;
@@ -13,6 +13,24 @@ impl Following for Configuration {
             Set::SessionsDirectories(value) => state.sessions_directories_option = Some(value),
             Set::ThreadDatabases(value) => state.thread_databases_option = Some(value),
             Set::SubscriberCapacity(value) => state.capacity_option = Some(value),
+        }
+        state
+    }
+}
+
+/// The readout follows each value set, and each change in which of the
+/// recorded sessions directories are still awaited.
+impl Following for ConfigurationReadout {
+    type Change = ConfigurationChange;
+
+    fn after(mut state: Self, change: Self::Change) -> Self {
+        match change {
+            ConfigurationChange::Set(set) => {
+                state.configuration = Configuration::after(state.configuration, set);
+            }
+            ConfigurationChange::AwaitedDirectories(awaited) => {
+                state.awaited_directories = awaited;
+            }
         }
         state
     }
