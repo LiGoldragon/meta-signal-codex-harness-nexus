@@ -4,8 +4,8 @@ Signal
 [ Configure.Set
   Subscribe ]
 [ Configured.Set
-  ConfigureRefused.ConfigurationRefusal
-  Subscribed.Stream<Configuration Set> ]
+  Subscribed.Stream<Configuration Set>
+  ConfigureRefused.ConfigurationRefusal ]
 [ FlowsRoot.String
   IdentityProducer.String
   SessionsDirectories.Vector<FilePath>
