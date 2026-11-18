@@ -5,6 +5,10 @@
     clippy::type_complexity
 )]
 #[rustfmt::skip]
+#[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
+pub struct Capacity(pub i64);
+#[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
 pub struct FlowsRoot(pub String);
@@ -28,7 +32,7 @@ pub enum Set {
     IdentityProducer(IdentityProducer),
     SessionsDirectories(SessionsDirectories),
     ThreadDatabases(ThreadDatabases),
-    SubscriberCapacity(nexus::Capacity),
+    SubscriberCapacity(Capacity),
 }
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
@@ -38,7 +42,7 @@ pub struct Configuration {
     pub identity_producer_option: std::option::Option<IdentityProducer>,
     pub sessions_directories_option: std::option::Option<SessionsDirectories>,
     pub thread_databases_option: std::option::Option<ThreadDatabases>,
-    pub capacity_option: std::option::Option<nexus::Capacity>,
+    pub capacity_option: std::option::Option<Capacity>,
 }
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
@@ -54,7 +58,7 @@ pub enum ConfigurationField {
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
 pub enum ConfigurationRefusal {
-    InvalidCapacity(nexus::Capacity),
+    InvalidCapacity(Capacity),
     InvalidPath(harness::FilePath),
 }
 #[rustfmt::skip]

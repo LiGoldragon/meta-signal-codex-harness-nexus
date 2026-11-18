@@ -275,7 +275,7 @@ rec {
         sha256 = "03swzqznragy8n0x31lqc78g2af054jwivp7lkrbrc0khz74lyl7";
 
       };
-      "ethos-zero 22.0.0" = rec {
+      "ethos-zero" = rec {
         crateName = "ethos-zero";
         version = "22.0.0";
         edition = "2024";
@@ -285,58 +285,6 @@ rec {
           url = "https://github.com/LiGoldragon/ethos-zero";
           rev = "1976e45fe1edfd5676cb33919dba1ec20c785a02";
           sha256 = "12b6np5n8knlpv2rb98g0m04n6xxaprd8n5hy4wgw658h5vg216j";
-        };
-        libName = "ethos_zero";
-        dependencies = [
-          {
-            name = "datom-codec";
-            packageId = "datom-codec";
-            features = [ "rkyv" ];
-          }
-          {
-            name = "prettyplease";
-            packageId = "prettyplease";
-          }
-          {
-            name = "proc-macro2";
-            packageId = "proc-macro2";
-          }
-          {
-            name = "protos";
-            packageId = "protos";
-            features = [ "rkyv" ];
-          }
-          {
-            name = "quote";
-            packageId = "quote";
-          }
-          {
-            name = "rkyv";
-            packageId = "rkyv";
-            usesDefaultFeatures = false;
-            features = [ "std" "bytecheck" "little_endian" "pointer_width_32" "unaligned" ];
-          }
-          {
-            name = "syn";
-            packageId = "syn 3.0.5";
-            features = [ "full" ];
-          }
-        ];
-        features = {
-          "default" = [ "datom" ];
-        };
-        resolvedDefaultFeatures = [ "datom" "default" ];
-      };
-      "ethos-zero 30.0.0" = rec {
-        crateName = "ethos-zero";
-        version = "30.0.0";
-        edition = "2024";
-        crateBin = [];
-        workspace_member = null;
-        src = pkgs.fetchgit {
-          url = "https://github.com/LiGoldragon/ethos-zero";
-          rev = "b97d9526909a1ecebf61339f5723eaca53de5dca";
-          sha256 = "0ixkiwrwiyahwnljc9cd2464l2i5a7jknac6hfdig78chjmpcpmc";
         };
         libName = "ethos_zero";
         dependencies = [
@@ -411,7 +359,7 @@ rec {
         buildDependencies = [
           {
             name = "ethos-zero";
-            packageId = "ethos-zero 22.0.0";
+            packageId = "ethos-zero";
           }
         ];
         features = {
@@ -639,11 +587,6 @@ rec {
             usesDefaultFeatures = false;
           }
           {
-            name = "nexus";
-            packageId = "nexus";
-            usesDefaultFeatures = false;
-          }
-          {
             name = "protos";
             packageId = "protos";
             optional = true;
@@ -661,7 +604,7 @@ rec {
           }
         ];
         features = {
-          "datom" = [ "dep:datom-codec" "dep:protos" "harness/datom" "nexus/datom" "signal/datom" ];
+          "datom" = [ "dep:datom-codec" "dep:protos" "harness/datom" "signal/datom" ];
         };
         resolvedDefaultFeatures = [ "datom" "default" ];
       };
@@ -710,72 +653,6 @@ rec {
           }
         ];
 
-      };
-      "nexus" = rec {
-        crateName = "nexus";
-        version = "0.9.0";
-        edition = "2024";
-        workspace_member = null;
-        src = pkgs.fetchgit {
-          url = "https://github.com/LiGoldragon/nexus";
-          rev = "d020a62d9258c9d8682faedf77252d8778ed0857";
-          sha256 = "1lvnjlpaky1mgwngq4idkcd4mra4j7a5kvnaraz8v57fs9zskj4d";
-        };
-        dependencies = [
-          {
-            name = "datom-codec";
-            packageId = "datom-codec";
-            optional = true;
-          }
-          {
-            name = "futures-util";
-            packageId = "futures-util";
-            usesDefaultFeatures = false;
-          }
-          {
-            name = "protos";
-            packageId = "protos";
-            optional = true;
-          }
-          {
-            name = "rkyv";
-            packageId = "rkyv";
-            usesDefaultFeatures = false;
-            features = [ "std" "bytecheck" "little_endian" "pointer_width_32" "unaligned" ];
-          }
-          {
-            name = "signal";
-            packageId = "signal";
-          }
-          {
-            name = "thiserror";
-            packageId = "thiserror";
-          }
-          {
-            name = "tokio";
-            packageId = "tokio";
-            usesDefaultFeatures = false;
-            features = [ "sync" ];
-          }
-        ];
-        buildDependencies = [
-          {
-            name = "ethos-zero";
-            packageId = "ethos-zero 30.0.0";
-          }
-        ];
-        devDependencies = [
-          {
-            name = "tokio";
-            packageId = "tokio";
-            usesDefaultFeatures = false;
-            features = [ "sync" "rt" "macros" ];
-          }
-        ];
-        features = {
-          "datom" = [ "dep:datom-codec" "dep:protos" ];
-        };
-        resolvedDefaultFeatures = [ "datom" ];
       };
       "once_cell" = rec {
         crateName = "once_cell";
@@ -1190,13 +1067,13 @@ rec {
         buildDependencies = [
           {
             name = "ethos-zero";
-            packageId = "ethos-zero 22.0.0";
+            packageId = "ethos-zero";
           }
         ];
         features = {
           "datom" = [ "dep:datom-codec" "dep:protos" ];
         };
-        resolvedDefaultFeatures = [ "datom" "default" ];
+        resolvedDefaultFeatures = [ "datom" ];
       };
       "simdutf8" = rec {
         crateName = "simdutf8";
@@ -1376,43 +1253,6 @@ rec {
           "Soveu <marx.tomasz@gmail.com>"
         ];
 
-      };
-      "tokio" = rec {
-        crateName = "tokio";
-        version = "1.54.1";
-        edition = "2021";
-        sha256 = "18wn0c3yvy6ld8yis0fw6rqkc4rwnmv5mav4fan6zljqa8jx6bxm";
-        authors = [
-          "Tokio Contributors <team@tokio.rs>"
-        ];
-        dependencies = [
-          {
-            name = "pin-project-lite";
-            packageId = "pin-project-lite";
-          }
-        ];
-        features = {
-          "bytes" = [ "dep:bytes" ];
-          "full" = [ "fs" "io-util" "io-std" "macros" "net" "parking_lot" "process" "rt" "rt-multi-thread" "signal" "sync" "time" ];
-          "io-uring" = [ "dep:io-uring" "libc" "mio/os-poll" "mio/os-ext" "dep:slab" ];
-          "io-util" = [ "bytes" ];
-          "libc" = [ "dep:libc" ];
-          "macros" = [ "tokio-macros" ];
-          "mio" = [ "dep:mio" ];
-          "net" = [ "libc" "mio/os-poll" "mio/os-ext" "mio/net" "socket2" "windows-sys/Win32_Foundation" "windows-sys/Win32_Security" "windows-sys/Win32_Storage_FileSystem" "windows-sys/Win32_System_Pipes" "windows-sys/Win32_System_SystemServices" ];
-          "parking_lot" = [ "dep:parking_lot" ];
-          "process" = [ "bytes" "libc" "mio/os-poll" "mio/os-ext" "mio/net" "signal-hook-registry" "windows-sys/Win32_Foundation" "windows-sys/Win32_System_Threading" "windows-sys/Win32_System_WindowsProgramming" ];
-          "rt-multi-thread" = [ "rt" ];
-          "signal" = [ "libc" "mio/os-poll" "mio/net" "mio/os-ext" "signal-hook-registry" "windows-sys/Win32_Foundation" "windows-sys/Win32_System_Console" ];
-          "signal-hook-registry" = [ "dep:signal-hook-registry" ];
-          "socket2" = [ "dep:socket2" ];
-          "taskdump" = [ "dep:backtrace" ];
-          "test-util" = [ "rt" "sync" "time" ];
-          "tokio-macros" = [ "dep:tokio-macros" ];
-          "tracing" = [ "dep:tracing" ];
-          "windows-sys" = [ "dep:windows-sys" ];
-        };
-        resolvedDefaultFeatures = [ "sync" ];
       };
       "unicode-ident" = rec {
         crateName = "unicode-ident";

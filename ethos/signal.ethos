@@ -1,12 +1,12 @@
 Signal
-[ harness:FilePath
-  nexus:Capacity ]
+[ harness:FilePath ]
 [ Configure.Set
   Subscribe ]
 [ Configured.Set
   Subscribed.Stream<Configuration Set>
   ConfigureRefused.ConfigurationRefusal ]
-[ FlowsRoot.String
+[ Capacity.Integer
+  FlowsRoot.String
   IdentityProducer.String
   SessionsDirectories.Vector<FilePath>
   ThreadDatabases.Vector<FilePath>
