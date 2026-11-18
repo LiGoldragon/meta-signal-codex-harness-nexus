@@ -18,8 +18,9 @@ impl Following for Configuration {
     }
 }
 
-/// The readout follows each value set, and each change in which of the
-/// recorded sessions directories are still awaited.
+/// The readout follows each value set, each change in which of the
+/// recorded sessions directories are still awaited, and each change in
+/// which cannot be watched.
 impl Following for ConfigurationReadout {
     type Change = ConfigurationChange;
 
@@ -30,6 +31,9 @@ impl Following for ConfigurationReadout {
             }
             ConfigurationChange::AwaitedDirectories(awaited) => {
                 state.awaited_directories = awaited;
+            }
+            ConfigurationChange::UnwatchableDirectories(unwatchable) => {
+                state.unwatchable_directories = unwatchable;
             }
         }
         state

@@ -68,9 +68,14 @@ pub struct AwaitedDirectories(pub std::vec::Vec<harness::FilePath>);
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
+pub struct UnwatchableDirectories(pub std::vec::Vec<UnwatchableDirectory>);
+#[rustfmt::skip]
+#[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
 pub struct ConfigurationReadout {
     pub configuration: Configuration,
     pub awaited_directories: AwaitedDirectories,
+    pub unwatchable_directories: UnwatchableDirectories,
 }
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
@@ -78,6 +83,7 @@ pub struct ConfigurationReadout {
 pub enum ConfigurationChange {
     Set(Set),
     AwaitedDirectories(AwaitedDirectories),
+    UnwatchableDirectories(UnwatchableDirectories),
 }
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
@@ -109,9 +115,10 @@ pub enum ConfigurationRefusal {
     TranslatorSetting,
     InvalidCapacity(Capacity),
     InvalidPath(harness::FilePath),
-    Unrecorded(Diagnostic),
+    Unrecorded(signal_codex_harness_nexus::MemoryFault),
     CapacityUnset,
     UnwatchableDirectory(UnwatchableDirectory),
+    Poisoned(signal_codex_harness_nexus::HeldLock),
 }
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]

@@ -2,9 +2,10 @@
 //! value at a time, and the subscription that follows its readout. The text
 //! budget is the translator's own setting, which the translator answers
 //! itself; every other setting is the Nexus's. The readout is the recorded
-//! configuration and the sessions directories recorded but not yet present,
-//! which the Nexus awaits; a directory present that cannot be watched is
-//! refused, never recorded.
+//! configuration, the sessions directories recorded but not yet present,
+//! which the Nexus awaits, and those recorded that it cannot watch, each
+//! with why. A directory present that cannot be watched is refused when it
+//! is set, never recorded.
 
 mod generated {
     pub mod signal;

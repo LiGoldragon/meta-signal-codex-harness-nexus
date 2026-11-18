@@ -1,5 +1,6 @@
 Signal
-[ harness:FilePath ]
+[ harness:FilePath
+  signal_codex_harness_nexus:[ MemoryFault HeldLock ] ]
 [ Configure.Set
   Subscribe ]
 [ Configured.Set
@@ -26,9 +27,11 @@ Signal
                   Option<ThreadDatabases>
                   Option<Capacity> }
   AwaitedDirectories.Vector<FilePath>
-  ConfigurationReadout.{ Configuration AwaitedDirectories }
+  UnwatchableDirectories.Vector<UnwatchableDirectory>   ; recorded, and not watched, each with why
+  ConfigurationReadout.{ Configuration AwaitedDirectories UnwatchableDirectories }
   ConfigurationChange.[ Set
-                        AwaitedDirectories ]
+                        AwaitedDirectories
+                        UnwatchableDirectories ]
   ConfigurationField.[ TextBudget
                        FlowsRoot
                        IdentityProducer
@@ -41,6 +44,7 @@ Signal
                          TranslatorSetting
                          InvalidCapacity.Capacity
                          InvalidPath.FilePath
-                         Unrecorded.Diagnostic
+                         Unrecorded.MemoryFault
                          CapacityUnset
-                         UnwatchableDirectory ] ]
+                         UnwatchableDirectory
+                         Poisoned.HeldLock ] ]
