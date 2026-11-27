@@ -11,8 +11,8 @@ Signal
   Capacity.Integer
   FlowsRoot.String
   IdentityProducer.String
-  SessionsDirectories.Vector<FilePath>
-  ThreadDatabases.Vector<FilePath>
+  SessionsDirectories.⟦ FilePath ⟧
+  ThreadDatabases.⟦ FilePath ⟧
   Set.[ TextBudget
         FlowsRoot
         IdentityProducer
@@ -25,7 +25,7 @@ Signal
                   Option<SessionsDirectories>
                   Option<ThreadDatabases>
                   Option<Capacity> }
-  AwaitedDirectories.Vector<FilePath>
+  AwaitedDirectories.⟦ FilePath ⟧
   ConfigurationReadout.{ Configuration AwaitedDirectories }
   ConfigurationChange.[ Set
                         AwaitedDirectories ]

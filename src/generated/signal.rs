@@ -2,8 +2,11 @@
     dead_code,
     non_camel_case_types,
     non_snake_case,
+    unused_extern_crates,
     clippy::type_complexity
 )]
+#[rustfmt::skip]
+extern crate alloc;
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
@@ -26,19 +29,19 @@ pub struct Capacity(pub i64);
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
-pub struct FlowsRoot(pub String);
+pub struct FlowsRoot(pub alloc::string::String);
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
-pub struct IdentityProducer(pub String);
+pub struct IdentityProducer(pub alloc::string::String);
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
-pub struct SessionsDirectories(pub std::vec::Vec<harness::FilePath>);
+pub struct SessionsDirectories(pub alloc::vec::Vec<harness::FilePath>);
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
-pub struct ThreadDatabases(pub std::vec::Vec<harness::FilePath>);
+pub struct ThreadDatabases(pub alloc::vec::Vec<harness::FilePath>);
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
@@ -54,17 +57,17 @@ pub enum Set {
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
 pub struct Configuration {
-    pub text_budget_option: std::option::Option<TextBudget>,
-    pub flows_root_option: std::option::Option<FlowsRoot>,
-    pub identity_producer_option: std::option::Option<IdentityProducer>,
-    pub sessions_directories_option: std::option::Option<SessionsDirectories>,
-    pub thread_databases_option: std::option::Option<ThreadDatabases>,
-    pub capacity_option: std::option::Option<Capacity>,
+    pub text_budget_option: core::option::Option<TextBudget>,
+    pub flows_root_option: core::option::Option<FlowsRoot>,
+    pub identity_producer_option: core::option::Option<IdentityProducer>,
+    pub sessions_directories_option: core::option::Option<SessionsDirectories>,
+    pub thread_databases_option: core::option::Option<ThreadDatabases>,
+    pub capacity_option: core::option::Option<Capacity>,
 }
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
-pub struct AwaitedDirectories(pub std::vec::Vec<harness::FilePath>);
+pub struct AwaitedDirectories(pub alloc::vec::Vec<harness::FilePath>);
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
@@ -93,7 +96,7 @@ pub enum ConfigurationField {
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
-pub struct Diagnostic(pub String);
+pub struct Diagnostic(pub alloc::string::String);
 #[rustfmt::skip]
 #[derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "datom", derive(datom_codec::Datomizable, datom_codec::Composing))]
@@ -137,10 +140,10 @@ pub enum Answer {
 #[rustfmt::skip]
 #[allow(clippy::result_large_err, clippy::ptr_arg, clippy::borrowed_box)]
 pub trait Answering {
-    fn configure(&self, set: &Set) -> std::result::Result<Set, Output>;
+    fn configure(&self, set: &Set) -> core::result::Result<Set, Output>;
     fn subscribe(
         &self,
-    ) -> std::result::Result<
+    ) -> core::result::Result<
         signal::Stream<ConfigurationReadout, ConfigurationChange>,
         Output,
     >;

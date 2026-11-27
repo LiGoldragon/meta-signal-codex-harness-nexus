@@ -12,7 +12,7 @@
       generated = pkgs.runCommand "meta-signal-codex-harness-nexus-generated" {
         nativeBuildInputs = [ ethos.packages.${pkgs.stdenv.hostPlatform.system}.ethos-zero ];
       } ''
-        ethos-zero "Generate.{ ${./ethos}/signal.ethos $PWD/generated }"
+        ethos-zero "Generate.{ [ ${./ethos}/signal.ethos ] $PWD/generated }"
         diff -u ${./src/generated/signal.rs} generated/signal.rs
         touch "$out"
       '';
